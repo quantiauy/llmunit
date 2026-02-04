@@ -1,0 +1,10 @@
+{
+    "name": "basic-tool-test",
+    "memory": [],
+    "steps": [
+        {
+            "message": "Hello, please execute the test tool",
+            "expectedBehavior": "The agent must identify the intention to use the tool and execute 'agent_basic_tool'. Then it must respond confirming the execution."
+        }
+    ]
+}

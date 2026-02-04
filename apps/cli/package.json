@@ -1,0 +1,20 @@
+{
+  "name": "@llmunit/cli",
+  "scripts": {
+    "test:prompt": "bun run src/interfaces/cli/index.ts run"
+  },
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "commander": "^14.0.2",
+    "dotenv": "^17.2.3",
+    "zod": "^4.3.6",
+    "@llmunit/shared": "workspace:*"
+  }
+}

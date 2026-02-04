@@ -1,0 +1,19 @@
+{
+    "name": "@llmunit/shared",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "bun build src/index.ts --outdir dist --target bun && tsc --emitDeclarationOnly --declaration --outDir dist",
+        "watch": "bun build src/index.ts --outdir dist --target bun --watch",
+        "test": "bun test"
+    },
+    "dependencies": {
+        "zod": "^3.24.1"
+    },
+    "devDependencies": {
+        "bun-types": "latest",
+        "typescript": "^5.9.3"
+    }
+}

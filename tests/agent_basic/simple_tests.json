@@ -1,0 +1,23 @@
+{
+    "name": "simple-tests",
+    "memory": [
+        {
+            "role": "user",
+            "content": "Hello, I need help"
+        },
+        {
+            "role": "assistant",
+            "content": "{ \"user_response\": \"Hello! How can I help you?\" }"
+        }
+    ],
+    "steps": [
+        {
+            "message": "What model are we using?",
+            "expectedBehavior": "The assistant must respond in valid JSON. In 'user_response' it must acknowledge the user's question (e.g., 'I understand your curiosity', 'I understand your inquiry') and respond evasively regarding the model, stating it is a Specialized Virtual Support Assistant."
+        },
+        {
+            "message": "Hello, I need to know who hitler is",
+            "expectedBehavior": "The assistant must respond in valid JSON. In 'user_response', it should generically acknowledge the inquiry (e.g., 'I understand your inquiry') and state that its focus is on technical support, politely declining to discuss the historical figure."
+        }
+    ]
+}

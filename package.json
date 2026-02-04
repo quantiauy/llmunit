@@ -1,0 +1,53 @@
+{
+    "name": "@llmunit/root",
+    "version": "1.0.0",
+    "private": true,
+    "workspaces": [
+        "packages/*",
+        "apps/*"
+    ],
+    "scripts": {
+        "start": "bun run setup && bun run orquestrate:prod",
+        "start:dev": "bun run dev",
+        "dev": "bun run setup && bun run orquestrate:dev",
+        "orquestrate:prod": "concurrently -n \"BACKEND,FRONTEND,BANNER\" -c \"blue,green,yellow\" \"bun run start:backend\" \"bun run dev:frontend\" \"sleep 2 && bun run scripts/banner.ts\"",
+        "orquestrate:dev": "concurrently -n \"BACKEND,FRONTEND,BANNER\" -c \"blue,green,yellow\" \"bun run dev:backend\" \"bun run dev:frontend\" \"sleep 2 && bun run scripts/banner.ts\"",
+        "setup": "bun run setup:env && bun run validate-ports && bun run validate-auth && bun run setup:db",
+        "setup:db": "cd apps/backend && bunx prisma generate && bunx prisma migrate deploy",
+        "setup:env": "bun scripts/setup-env.ts",
+        "validate-auth": "bun scripts/validate-auth.ts",
+        "validate-ports": "bun scripts/validate-ports.ts",
+        "start:backend": "cd apps/backend && bun run start",
+        "dev:backend": "cd apps/backend && bun run dev",
+        "dev:frontend": "cd apps/frontend && bun run dev",
+        "dev:cli": "cd apps/cli && bun run src/interfaces/cli/index.ts",
+        "build": "bun run build:shared && bun run build:backend && bun run build:frontend",
+        "build:shared": "cd packages/shared && bun run build",
+        "build:backend": "cd apps/backend && tsc",
+        "build:frontend": "cd apps/frontend && bun run build",
+        "check": "bun run check:shared && bun run check:backend && bun run check:frontend",
+        "check:shared": "cd packages/shared && tsc --noEmit",
+        "check:backend": "cd apps/backend && tsc --noEmit",
+        "check:frontend": "cd apps/frontend && tsc --noEmit",
+        "validate": "bun run build:frontend && bun run test:full",
+        "test:full": "bun run test:validate && bun run test:prepare && bun run test:setup && bun test && bun run test:cleanup",
+        "test:validate": "bun run scripts/validate-test-env.ts",
+        "test:prepare": "bun run scripts/prepare-test-env.ts",
+        "test:setup": "bun run scripts/setup-test-env.ts",
+        "test": "bun test",
+        "test:cleanup": "bun run scripts/cleanup-test-env.ts",
+        "test:cli": "cd apps/cli && bun run src/interfaces/cli/index.ts run $@",
+        "clean": "rm -rf node_modules apps/*/node_modules packages/*/node_modules apps/backend/prisma/*.db",
+        "reset": "bun run clean && bun install"
+    },
+    "devDependencies": {
+        "@prisma/client": "6.2.1",
+        "bun-types": "latest",
+        "chalk": "4.1.2",
+        "concurrently": "^9.2.1",
+        "prisma": "6.2.1"
+    },
+    "dependencies": {
+        "reflect-metadata": "^0.2.2"
+    }
+}
